@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Settings - Personal Finance Manager</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4A90E2",
+                        "secondary": "#50E3C2",
+                        "danger": "#E94B3C",
+                        "background-light": "#F4F7FA",
+                        "background-dark": "#101c22",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#182832",
+                        "text-light": "#2C3E50",
+                        "text-dark": "#E0E6E9",
+                        "text-secondary-light": "#AAB8C2",
+                        "text-secondary-dark": "#8996A1",
+                        "border-light": "#EAEFF4",
+                        "border-dark": "#304351",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col">
+<div class="flex h-full min-h-screen w-full flex-row">
+<!-- SideNavBar -->
+<aside class="flex w-64 flex-col border-r border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark p-4">
+<div class="flex-grow">
+<div class="mb-8 flex items-center gap-3 px-2">
+<div class="rounded-lg bg-primary p-2 text-white">
+<span class="material-symbols-outlined text-2xl">account_balance_wallet</span>
+</div>
+<h1 class="text-xl font-bold text-text-light dark:text-text-dark">Financify</h1>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar of Alex Doe" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA4DksqKjInkpylccJHUyMbarrYsOwC67Gt9pFAW5OpzmHop-8LmWbyPbLFLN5yRobUc0KF_GL4eEPrLStt5ZzLxMTOKymnKefm4LVJbMriRTqYHEbP0bqXgxRg6y8HpJpS0wJTese3ukna8ATUU2dETBNTkiho4KPrW_yyZ3vAg5dyrQWXtZ8txNETaNfIrQIxKpOUHpkNGu-ziKa5VbgPrpcMAgCM5J4skM1LIKLLENlsZHRl98lF7m5t3HqvmESY2x_ODgZXRw");'></div>
+<div class="flex flex-col">
+<h1 class="text-text-light dark:text-text-dark text-base font-semibold leading-normal">Alex Doe</h1>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal">alex.doe@email.com</p>
+</div>
+</div>
+<div class="flex flex-col gap-2 pt-4">
+<div class="flex cursor-pointer items-center gap-3 rounded-lg bg-primary/10 px-3 py-2 text-primary">
+<span class="material-symbols-outlined text-2xl">person</span>
+<p class="text-sm font-semibold leading-normal">Profile</p>
+</div>
+<div class="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-text-light dark:text-text-dark hover:bg-primary/10 hover:text-primary">
+<span class="material-symbols-outlined text-2xl">lock</span>
+<p class="text-sm font-medium leading-normal">Security</p>
+</div>
+<div class="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-text-light dark:text-text-dark hover:bg-primary/10 hover:text-primary">
+<span class="material-symbols-outlined text-2xl">account_balance</span>
+<p class="text-sm font-medium leading-normal">Accounts</p>
+</div>
+<div class="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-text-light dark:text-text-dark hover:bg-primary/10 hover:text-primary">
+<span class="material-symbols-outlined text-2xl">tune</span>
+<p class="text-sm font-medium leading-normal">Preferences</p>
+</div>
+<div class="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-text-light dark:text-text-dark hover:bg-primary/10 hover:text-primary">
+<span class="material-symbols-outlined text-2xl">notifications</span>
+<p class="text-sm font-medium leading-normal">Notifications</p>
+</div>
+<div class="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-text-light dark:text-text-dark hover:bg-primary/10 hover:text-primary">
+<span class="material-symbols-outlined text-2xl">help</span>
+<p class="text-sm font-medium leading-normal">Help</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-1 border-t border-border-light dark:border-border-dark pt-4">
+<div class="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-text-light dark:text-text-dark hover:bg-primary/10 hover:text-primary">
+<span class="material-symbols-outlined text-2xl">logout</span>
+<p class="text-sm font-medium leading-normal">Log Out</p>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="w-full flex-1 p-6 lg:p-10">
+<div class="mx-auto max-w-4xl">
+<!-- Page Header -->
+<div class="flex flex-wrap justify-between gap-3 pb-8">
+<div class="flex flex-col gap-2">
+<h1 class="text-text-light dark:text-text-dark text-3xl font-bold tracking-tight">Profile Settings</h1>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-base font-normal leading-normal">Manage your personal information and profile picture.</p>
+</div>
+</div>
+<!-- Profile Section -->
+<div class="rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark">
+<div class="flex flex-col gap-4 p-6 @container md:flex-row md:items-center md:justify-between">
+<div class="flex items-center gap-5">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-24 w-24" data-alt="User avatar of Alex Doe" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAdMr85-rMlDPXaMn6_cHu6DQ2oEW8fN3cyt-UwqGsMJlR347Ub2TARekHSKCn9EixD-QmTCGgQYSn-D58zMZ6lqCk3pP6n4Wze7jUZBFA9okPs5sOOaDA1rF357yvZAh3pkickMgFbWEGPP2XIonal1WWLp4FQ57UZ408z27G7bxrPZE4e1wj4Vgh9SJJG0QD3G0YSo3poX2fadvAWzzkqdUTPLe-2wUAJG3FHcfYAxuz7G06l5ofLU17t8poLAQQluMcCk4bcFw");'></div>
+<div class="flex flex-col justify-center">
+<p class="text-text-light dark:text-text-dark text-xl font-bold leading-tight">Alex Doe</p>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-base font-normal leading-normal">alex.doe@email.com</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary/10 text-primary text-sm font-bold leading-normal w-full @[480px]:w-auto hover:bg-primary/20 transition-colors">
+<span class="truncate">Upload new picture</span>
+</button>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 text-danger text-sm font-bold leading-normal w-full @[480px]:w-auto hover:bg-danger/10 transition-colors">
+<span class="truncate">Remove</span>
+</button>
+</div>
+</div>
+<div class="border-t border-border-light dark:border-border-dark p-6">
+<form class="grid grid-cols-1 gap-6 md:grid-cols-2">
+<label class="flex flex-col">
+<p class="text-text-light dark:text-text-dark text-sm font-medium leading-normal pb-2">Full Name</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-12 placeholder:text-text-secondary-light dark:placeholder:text-text-secondary-dark p-3 text-base font-normal leading-normal" value="Alex Doe"/>
+</label>
+<label class="flex flex-col">
+<p class="text-text-light dark:text-text-dark text-sm font-medium leading-normal pb-2">Email Address</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-12 placeholder:text-text-secondary-light dark:placeholder:text-text-secondary-dark p-3 text-base font-normal leading-normal" value="alex.doe@email.com"/>
+</label>
+<label class="flex flex-col">
+<p class="text-text-light dark:text-text-dark text-sm font-medium leading-normal pb-2">Password</p>
+<div class="flex w-full flex-1 items-stretch">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-12 placeholder:text-text-secondary-light dark:placeholder:text-text-secondary-dark p-3 rounded-r-none border-r-0 pr-2 text-base font-normal leading-normal" type="password" value="••••••••••••"/>
+<div class="text-text-secondary-light dark:text-text-secondary-dark flex border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark items-center justify-center pr-3 rounded-r-lg border-l-0">
+<span class="material-symbols-outlined text-xl">visibility</span>
+</div>
+</div>
+</label>
+</form>
+</div>
+<div class="flex items-center justify-end gap-4 border-t border-border-light dark:border-border-dark px-6 py-4">
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 text-text-light dark:text-text-dark text-sm font-bold leading-normal hover:bg-primary/10 transition-colors">
+<span class="truncate">Cancel</span>
+</button>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal hover:bg-primary/90 transition-colors">
+<span class="truncate">Save Changes</span>
+</button>
+</div>
+</div>
+<!-- Connected Accounts Section -->
+<div class="mt-10 rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark">
+<div class="flex flex-col gap-2 p-6 md:flex-row md:items-center md:justify-between">
+<div>
+<h2 class="text-xl font-bold text-text-light dark:text-text-dark">Connected Accounts</h2>
+<p class="text-text-secondary-light dark:text-text-secondary-dark">Manage your linked bank accounts.</p>
+</div>
+<button class="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-bold text-white shadow-sm hover:bg-primary/90 transition-colors md:w-auto">
+<span class="material-symbols-outlined text-xl">add</span>
+<span>Connect New Account</span>
+</button>
+</div>
+<div class="border-t border-border-light dark:border-border-dark p-6">
+<div class="space-y-4">
+<!-- Account Card 1 -->
+<div class="flex flex-col items-start gap-4 rounded-lg border border-border-light dark:border-border-dark p-4 sm:flex-row sm:items-center sm:justify-between">
+<div class="flex items-center gap-4">
+<img alt="Bank Logo" class="h-12 w-12 rounded-full" data-alt="Generic green bank logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCY7npsJafqyKGVh9f4NRFB3FIVRO_Hn2-bdMAhfU1tE9VykD2RCfpednQnZ4yTcXcWdRnDHoqCfzmoOZ-ftLXfV3qtUFlpPB3ybactlWfc3NGWvPK0kaivVXCql-vp4UMqUtLhZsAK4vtgqR_Ec1v1d_V7MTtARRRPTFnpEZ7By5kTvI8b044hSihPoOHxgagpZi9DNB8e_OwIWk5PskKMvI5TnT2UtMLZB49KR-3Mwd6274-D3BkFMcnufkzwOpwiVVEiHXZNtA"/>
+<div>
+<p class="font-semibold text-text-light dark:text-text-dark">Checking Account (...4321)</p>
+<div class="flex items-center gap-1.5">
+<span class="h-2 w-2 rounded-full bg-secondary"></span>
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">Connected</p>
+</div>
+</div>
+</div>
+<div class="flex w-full items-center gap-2 sm:w-auto">
+<button class="flex h-9 w-full items-center justify-center gap-2 rounded-lg px-3 text-sm font-bold text-text-light dark:text-text-dark hover:bg-primary/10 sm:w-auto transition-colors">
+<span class="material-symbols-outlined text-lg">refresh</span>
+                                            Refresh
+                                        </button>
+<button class="flex h-9 w-full items-center justify-center gap-2 rounded-lg px-3 text-sm font-bold text-danger hover:bg-danger/10 sm:w-auto transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+                                            Remove
+                                        </button>
+</div>
+</div>
+<!-- Account Card 2 -->
+<div class="flex flex-col items-start gap-4 rounded-lg border border-border-light dark:border-border-dark p-4 sm:flex-row sm:items-center sm:justify-between">
+<div class="flex items-center gap-4">
+<img alt="Bank Logo" class="h-12 w-12 rounded-full" data-alt="Generic red bank logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxGt3ifoYFCKT50wZ65OEPi_AS-Ee6A99mTj5t14rNxIGbLsrQ-ndzTYuvGc0L-_l05Sgfdl2k0yjLeHLAkXTFMLB7uFfI6fNKInqAcR_zSrQe_8UEYt3sydD8VVg8SCMy5Gt5f_wVSifSY_smxL_pl0BfBw5XnSQLijT86_bFuNzdCLnxfgqBWg5uZIIybm2Bg06pr74WsFlXGgC5UGGdv31eLZ67N9b5neDD3lkJ7lPvyw5VPKG9PoSS71IuxrxxPr1KUU6IGQ"/>
+<div>
+<p class="font-semibold text-text-light dark:text-text-dark">Savings Account (...8765)</p>
+<div class="flex items-center gap-1.5">
+<span class="h-2 w-2 rounded-full bg-danger"></span>
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">Sync error</p>
+</div>
+</div>
+</div>
+<div class="flex w-full items-center gap-2 sm:w-auto">
+<button class="flex h-9 w-full items-center justify-center gap-2 rounded-lg px-3 text-sm font-bold text-text-light dark:text-text-dark hover:bg-primary/10 sm:w-auto transition-colors">
+<span class="material-symbols-outlined text-lg">refresh</span>
+                                            Refresh
+                                        </button>
+<button class="flex h-9 w-full items-center justify-center gap-2 rounded-lg px-3 text-sm font-bold text-danger hover:bg-danger/10 sm:w-auto transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+                                            Remove
+                                        </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

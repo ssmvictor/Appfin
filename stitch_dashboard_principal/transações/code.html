@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>All Transactions - FinanceApp</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#4A90E2",
+            "background-light": "#F8F9FA",
+            "background-dark": "#101c22",
+          },
+          fontFamily: {
+            "display": ["Manrope", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#333333] dark:text-gray-200">
+<div class="relative flex h-auto min-h-screen w-full flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#E0E0E0] dark:border-gray-700 px-6 sm:px-10 py-3 bg-white dark:bg-[#1a2831]">
+<div class="flex items-center gap-4 text-[#0d171b] dark:text-white">
+<div class="size-8 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M39.475 21.6262C40.358 21.4363 40.6863 21.5589 40.7581 21.5934C40.7876 21.655 40.8547 21.857 40.8082 22.3336C40.7408 23.0255 40.4502 24.0046 39.8572 25.2301C38.6799 27.6631 36.5085 30.6631 33.5858 33.5858C30.6631 36.5085 27.6632 38.6799 25.2301 39.8572C24.0046 40.4502 23.0255 40.7407 22.3336 40.8082C21.8571 40.8547 21.6551 40.7875 21.5934 40.7581C21.5589 40.6863 21.4363 40.358 21.6262 39.475C21.8562 38.4054 22.4689 36.9657 23.5038 35.2817C24.7575 33.2417 26.5497 30.9744 28.7621 28.762C30.9744 26.5497 33.2417 24.7574 35.2817 23.5037C36.9657 22.4689 38.4054 21.8562 39.475 21.6262ZM4.41189 29.2403L18.7597 43.5881C19.8813 44.7097 21.4027 44.9179 22.7217 44.7893C24.0585 44.659 25.5148 44.1631 26.9723 43.4579C29.9052 42.0387 33.2618 39.5667 36.4142 36.4142C39.5667 33.2618 42.0387 29.9052 43.4579 26.9723C44.1631 25.5148 44.659 24.0585 44.7893 22.7217C44.9179 21.4027 44.7097 19.8813 43.5881 18.7597L29.2403 4.41187C27.8527 3.02428 25.8765 3.02573 24.2861 3.36776C22.6081 3.72863 20.7334 4.58419 18.8396 5.74801C16.4978 7.18716 13.9881 9.18353 11.5858 11.5858C9.18354 13.988 7.18717 16.4978 5.74802 18.8396C4.58421 20.7334 3.72865 22.6081 3.36778 24.2861C3.02574 25.8765 3.02429 27.8527 4.41189 29.2403Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-[#0d171b] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">FinanceApp</h2>
+</div>
+<div class="flex flex-1 justify-end items-center gap-4 sm:gap-8">
+<div class="hidden md:flex items-center gap-9">
+<a class="text-[#333333] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary" href="#">Dashboard</a>
+<a class="text-primary dark:text-primary text-sm font-bold leading-normal" href="#">Transactions</a>
+<a class="text-[#333333] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary" href="#">Reports</a>
+</div>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90 transition-opacity">
+<span class="truncate">Add New Transaction</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAPOVjmPzJMqEaRMJkLO0gX2emL_TnbiuU0taFyxi3KhFC4xtHwFjst-NOTsxG8xe1jSiioVLEBzgLiPjOQkese4BzR2M1TI9UA6PXPmfTjVo2aBTUn5GrqAo-6HxjNio0GIRvbKRPCBKwzUAndFmsPT2amEha7LxjLRRFoYiy2NddCEDNVLj3Q7J_EZ5ynPlFLrySNF9n5t09VhOUuw_xJDksHbvHNjPsR6InyoxGEY_sI7tuy4a_19dUurWznpq83aS-Nsmi-Tw");'></div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow w-full max-w-screen-2xl mx-auto p-4 sm:p-6 lg:p-8">
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+<!-- Left Sidebar: Filters -->
+<aside class="lg:col-span-1">
+<div class="sticky top-6">
+<div class="flex flex-col gap-6 bg-white dark:bg-[#1a2831] p-6 rounded-xl border border-[#E0E0E0] dark:border-gray-700">
+<div>
+<h1 class="text-[#0d171b] dark:text-white text-lg font-bold leading-normal">Refine Transactions</h1>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">Use filters to narrow your results</p>
+</div>
+<!-- Search Bar -->
+<label class="flex flex-col w-full">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-11">
+<div class="text-gray-500 dark:text-gray-400 flex bg-background-light dark:bg-[#101c22] items-center justify-center pl-3.5 rounded-l-lg border border-r-0 border-[#E0E0E0] dark:border-gray-600">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-[#0d171b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-l-0 border-[#E0E0E0] dark:border-gray-600 bg-background-light dark:bg-[#101c22] h-full placeholder:text-gray-500 dark:placeholder:text-gray-400 px-4 text-sm font-normal leading-normal" placeholder="Search descriptions..."/>
+</div>
+</label>
+<!-- Date Range -->
+<div class="flex flex-col gap-2">
+<p class="text-[#0d171b] dark:text-white text-base font-semibold leading-normal">Date Range</p>
+<!-- This would be a real calendar picker component -->
+<div class="flex items-center justify-between p-3 rounded-lg border border-[#E0E0E0] dark:border-gray-600 bg-background-light dark:bg-background-dark cursor-pointer hover:border-primary/50">
+<span class="text-sm">Nov 5, 2023 - Nov 30, 2023</span>
+<span class="material-symbols-outlined text-xl text-gray-500 dark:text-gray-400">calendar_month</span>
+</div>
+</div>
+<!-- Transaction Type -->
+<div class="flex flex-col gap-2">
+<p class="text-[#0d171b] dark:text-white text-base font-semibold leading-normal">Transaction Type</p>
+<div class="grid grid-cols-3 gap-2">
+<button class="px-2 py-2 text-sm font-medium rounded-md bg-primary text-white">All</button>
+<button class="px-2 py-2 text-sm font-medium rounded-md bg-background-light dark:bg-[#101c22] border border-[#E0E0E0] dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">Income</button>
+<button class="px-2 py-2 text-sm font-medium rounded-md bg-background-light dark:bg-[#101c22] border border-[#E0E0E0] dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">Expenses</button>
+</div>
+</div>
+<!-- Category -->
+<div class="flex flex-col gap-2">
+<p class="text-[#0d171b] dark:text-white text-base font-semibold leading-normal">Category</p>
+<div class="flex flex-col max-h-48 overflow-y-auto pr-2">
+<label class="flex gap-x-3 py-2 flex-row items-center">
+<input checked="" class="h-5 w-5 rounded border-gray-300 dark:border-gray-600 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-2 focus:ring-offset-0 focus:ring-primary/50 dark:ring-offset-background-dark" type="checkbox"/>
+<p class="text-sm font-normal leading-normal">Groceries</p>
+</label>
+<label class="flex gap-x-3 py-2 flex-row items-center">
+<input class="h-5 w-5 rounded border-gray-300 dark:border-gray-600 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-2 focus:ring-offset-0 focus:ring-primary/50 dark:ring-offset-background-dark" type="checkbox"/>
+<p class="text-sm font-normal leading-normal">Rent</p>
+</label>
+<label class="flex gap-x-3 py-2 flex-row items-center">
+<input checked="" class="h-5 w-5 rounded border-gray-300 dark:border-gray-600 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-2 focus:ring-offset-0 focus:ring-primary/50 dark:ring-offset-background-dark" type="checkbox"/>
+<p class="text-sm font-normal leading-normal">Income</p>
+</label>
+<label class="flex gap-x-3 py-2 flex-row items-center">
+<input class="h-5 w-5 rounded border-gray-300 dark:border-gray-600 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-2 focus:ring-offset-0 focus:ring-primary/50 dark:ring-offset-background-dark" type="checkbox"/>
+<p class="text-sm font-normal leading-normal">Utilities</p>
+</label>
+<label class="flex gap-x-3 py-2 flex-row items-center">
+<input class="h-5 w-5 rounded border-gray-300 dark:border-gray-600 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-2 focus:ring-offset-0 focus:ring-primary/50 dark:ring-offset-background-dark" type="checkbox"/>
+<p class="text-sm font-normal leading-normal">Transport</p>
+</label>
+</div>
+</div>
+<!-- Filter Actions -->
+<div class="flex flex-col sm:flex-row gap-3 pt-4 border-t border-[#E0E0E0] dark:border-gray-700">
+<button class="flex-1 flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90 transition-opacity">
+<span class="truncate">Apply Filters</span>
+</button>
+<button class="flex-1 flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-gray-200 dark:bg-gray-600 text-[#333333] dark:text-gray-200 text-sm font-bold leading-normal tracking-[0.015em] hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors">
+<span class="truncate">Reset</span>
+</button>
+</div>
+</div>
+</div>
+</aside>
+<!-- Right Column: Transactions List -->
+<section class="lg:col-span-3">
+<div class="flex flex-col gap-6">
+<h1 class="text-[#0d171b] dark:text-white text-2xl font-bold">All Transactions</h1>
+<!-- Transactions Table -->
+<div class="bg-white dark:bg-[#1a2831] rounded-xl border border-[#E0E0E0] dark:border-gray-700 overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-sm text-left">
+<thead class="text-xs text-gray-500 dark:text-gray-400 uppercase bg-background-light dark:bg-[#101c22]">
+<tr>
+<th class="p-4 w-12" scope="col">
+<label class="flex items-center">
+<input class="h-5 w-5 rounded border-gray-300 dark:border-gray-600 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-2 focus:ring-offset-0 focus:ring-primary/50 dark:ring-offset-[#1a2831]" type="checkbox"/>
+</label>
+</th>
+<th class="px-6 py-3" scope="col">
+<div class="flex items-center gap-1 cursor-pointer">Date <span class="material-symbols-outlined text-base">arrow_downward</span></div>
+</th>
+<th class="px-6 py-3" scope="col">
+<div class="flex items-center gap-1 cursor-pointer">Description</div>
+</th>
+<th class="px-6 py-3" scope="col">
+<div class="flex items-center gap-1 cursor-pointer">Category</div>
+</th>
+<th class="px-6 py-3 text-right" scope="col">
+<div class="flex items-center justify-end gap-1 cursor-pointer">Amount</div>
+</th>
+<th class="px-6 py-3" scope="col">
+<span class="sr-only">Actions</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">
+<td class="p-4 w-12">
+<label class="flex items-center">
+<input class="h-5 w-5 rounded border-gray-300 dark:border-gray-600 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-2 focus:ring-offset-0 focus:ring-primary/50 dark:ring-offset-[#1a2831]" type="checkbox"/>
+</label>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">Nov 28, 2023</td>
+<td class="px-6 py-4 font-medium text-[#0d171b] dark:text-white">Monthly Salary</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-lg text-green-500">trending_up</span>
+<span>Income</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right font-semibold text-[#2ECC71]">+ $4,200.00</td>
+<td class="px-6 py-4 text-right">
+<button class="text-gray-500 hover:text-primary"><span class="material-symbols-outlined text-xl">more_vert</span></button>
+</td>
+</tr>
+<tr class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">
+<td class="p-4 w-12">
+<label class="flex items-center">
+<input class="h-5 w-5 rounded border-gray-300 dark:border-gray-600 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-2 focus:ring-offset-0 focus:ring-primary/50 dark:ring-offset-[#1a2831]" type="checkbox"/>
+</label>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">Nov 27, 2023</td>
+<td class="px-6 py-4 font-medium text-[#0d171b] dark:text-white">SuperMart Groceries</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-lg text-yellow-500">shopping_cart</span>
+<span>Groceries</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right font-semibold text-[#E74C3C]">- $152.75</td>
+<td class="px-6 py-4 text-right">
+<button class="text-gray-500 hover:text-primary"><span class="material-symbols-outlined text-xl">more_vert</span></button>
+</td>
+</tr>
+<tr class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">
+<td class="p-4 w-12">
+<label class="flex items-center">
+<input class="h-5 w-5 rounded border-gray-300 dark:border-gray-600 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-2 focus:ring-offset-0 focus:ring-primary/50 dark:ring-offset-[#1a2831]" type="checkbox"/>
+</label>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">Nov 25, 2023</td>
+<td class="px-6 py-4 font-medium text-[#0d171b] dark:text-white">Gas Bill</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-lg text-blue-500">lightbulb</span>
+<span>Utilities</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right font-semibold text-[#E74C3C]">- $88.10</td>
+<td class="px-6 py-4 text-right">
+<button class="text-gray-500 hover:text-primary"><span class="material-symbols-outlined text-xl">more_vert</span></button>
+</td>
+</tr>
+<tr class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">
+<td class="p-4 w-12">
+<label class="flex items-center">
+<input class="h-5 w-5 rounded border-gray-300 dark:border-gray-600 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-2 focus:ring-offset-0 focus:ring-primary/50 dark:ring-offset-[#1a2831]" type="checkbox"/>
+</label>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">Nov 22, 2023</td>
+<td class="px-6 py-4 font-medium text-[#0d171b] dark:text-white">Coffee Shop</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-lg text-orange-500">restaurant</span>
+<span>Food</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right font-semibold text-[#E74C3C]">- $12.50</td>
+<td class="px-6 py-4 text-right">
+<button class="text-gray-500 hover:text-primary"><span class="material-symbols-outlined text-xl">more_vert</span></button>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
+<td class="p-4 w-12">
+<label class="flex items-center">
+<input class="h-5 w-5 rounded border-gray-300 dark:border-gray-600 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-2 focus:ring-offset-0 focus:ring-primary/50 dark:ring-offset-[#1a2831]" type="checkbox"/>
+</label>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">Nov 20, 2023</td>
+<td class="px-6 py-4 font-medium text-[#0d171b] dark:text-white">Train Ticket</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-lg text-purple-500">train</span>
+<span>Transport</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right font-semibold text-[#E74C3C]">- $34.00</td>
+<td class="px-6 py-4 text-right">
+<button class="text-gray-500 hover:text-primary"><span class="material-symbols-outlined text-xl">more_vert</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Empty State -->
+<!-- <div class="text-center p-12">
+                  <span class="material-symbols-outlined text-6xl text-gray-300 dark:text-gray-600">search_off</span>
+                  <h3 class="mt-2 text-lg font-semibold text-[#0d171b] dark:text-white">No Transactions Found</h3>
+                  <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Try adjusting your filters or add a new transaction.</p>
+                  <button class="mt-6 flex mx-auto min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90 transition-opacity">
+                    <span class="truncate">Add Transaction</span>
+                  </button>
+                </div> -->
+</div>
+</div>
+<!-- Pagination -->
+<nav aria-label="Table navigation" class="flex items-center justify-between pt-4">
+<span class="text-sm font-normal text-gray-500 dark:text-gray-400">Showing <span class="font-semibold text-[#0d171b] dark:text-white">1-5</span> of <span class="font-semibold text-[#0d171b] dark:text-white">100</span></span>
+<ul class="inline-flex -space-x-px text-sm h-8">
+<li>
+<a class="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-[#1a2831] dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href="#">Previous</a>
+</li>
+<li>
+<a aria-current="page" class="flex items-center justify-center px-3 h-8 text-white bg-primary border border-primary hover:bg-primary/90" href="#">1</a>
+</li>
+<li>
+<a class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-[#1a2831] dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href="#">2</a>
+</li>
+<li>
+<a class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-[#1a2831] dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href="#">3</a>
+</li>
+<li>
+<a class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-[#1a2831] dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href="#">Next</a>
+</li>
+</ul>
+</nav>
+</div>
+</section>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Financial Reports</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#13a4ec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101c22",
+              "card-light": "#ffffff",
+              "card-dark": "#1a2a33",
+              "text-light-primary": "#0d171b",
+              "text-dark-primary": "#f0f6fa",
+              "text-light-secondary": "#4c809a",
+              "text-dark-secondary": "#9fb3c0",
+              "border-light": "#cfdfe7",
+              "border-dark": "#344a58",
+              "positive": "#078836",
+              "negative": "#e73508",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-light dark:border-border-dark px-6 lg:px-10 py-3 bg-card-light dark:bg-card-dark sticky top-0 z-10">
+<div class="flex items-center gap-4 text-text-light-primary dark:text-text-dark-primary">
+<div class="size-6">
+<svg class="text-primary" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M39.475 21.6262C40.358 21.4363 40.6863 21.5589 40.7581 21.5934C40.7876 21.655 40.8547 21.857 40.8082 22.3336C40.7408 23.0255 40.4502 24.0046 39.8572 25.2301C38.6799 27.6631 36.5085 30.6631 33.5858 33.5858C30.6631 36.5085 27.6632 38.6799 25.2301 39.8572C24.0046 40.4502 23.0255 40.7407 22.3336 40.8082C21.8571 40.8547 21.6551 40.7875 21.5934 40.7581C21.5589 40.6863 21.4363 40.358 21.6262 39.475C21.8562 38.4054 22.4689 36.9657 23.5038 35.2817C24.7575 33.2417 26.5497 30.9744 28.7621 28.762C30.9744 26.5497 33.2417 24.7574 35.2817 23.5037C36.9657 22.4689 38.4054 21.8562 39.475 21.6262ZM4.41189 29.2403L18.7597 43.5881C19.8813 44.7097 21.4027 44.9179 22.7217 44.7893C24.0585 44.659 25.5148 44.1631 26.9723 43.4579C29.9052 42.0387 33.2618 39.5667 36.4142 36.4142C39.5667 33.2618 42.0387 29.9052 43.4579 26.9723C44.1631 25.5148 44.659 24.0585 44.7893 22.7217C44.9179 21.4027 44.7097 19.8813 43.5881 18.7597L29.2403 4.41187C27.8527 3.02428 25.8765 3.02573 24.2861 3.36776C22.6081 3.72863 20.7334 4.58419 18.8396 5.74801C16.4978 7.18716 13.9881 9.18353 11.5858 11.5858C9.18354 13.988 7.18717 16.4978 5.74802 18.8396C4.58421 20.7334 3.72865 22.6081 3.36778 24.2861C3.02574 25.8765 3.02429 27.8527 4.41189 29.2403Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">FinanceApp</h2>
+</div>
+<div class="hidden lg:flex flex-1 justify-center gap-8">
+<div class="flex items-center gap-9">
+<a class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium leading-normal" href="#">Dashboard</a>
+<a class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium leading-normal" href="#">Accounts</a>
+<a class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium leading-normal" href="#">Transactions</a>
+<a class="text-primary text-sm font-bold leading-normal border-b-2 border-primary pb-1" href="#">Reports</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex gap-2">
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-slate-50 text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="material-symbols-outlined mr-2 text-base">download</span>
+<span class="truncate">Export Report</span>
+</button>
+<button class="hidden sm:flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-primary/20 text-text-light-primary dark:text-text-dark-primary gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+<span class="material-symbols-outlined text-text-light-secondary dark:text-text-dark-secondary">notifications</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCp5mzy_9BjxnzXHZSvL_astjhAuVYJWRUPasxGlZ8yKlsBtrDPwag-DrpLfKWlz5X3WQjfuWfgHmQLiBazs_ej7WCrneBfIxEXAnnvLBwCvBiAsGBn9QQV2Hjp5umjfZ-M-f1L-YHjeKVh_naey8vP-Pl7XCeWwg0kF8Ik7iP3JJSbPmQIgbyU-ST8_8Y-9wwlW31oh6TczWeJU4pl9rvf_jvoXiKN4FOyUrxz_Fs57VmoKE1U-Gr25oOK5QTztTr8OAW9Uocxsw");'></div>
+</div>
+</header>
+<div class="flex flex-1">
+<main class="flex-1 p-4 md:p-6 lg:p-8">
+<div class="flex flex-wrap justify-between items-center gap-4 mb-6">
+<p class="text-text-light-primary dark:text-text-dark-primary text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em] min-w-72">Financial Reports</p>
+<div class="w-full sm:w-auto">
+<div class="flex h-10 items-center justify-center rounded-lg bg-primary/20 dark:bg-card-dark p-1">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-3 has-[:checked]:bg-card-light dark:has-[:checked]:bg-background-dark has-[:checked]:shadow-sm has-[:checked]:text-text-light-primary dark:has-[:checked]:text-text-dark-primary text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium leading-normal">
+<span class="truncate">3M</span>
+<input class="invisible w-0" name="time-period" type="radio" value="3M"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-3 has-[:checked]:bg-card-light dark:has-[:checked]:bg-background-dark has-[:checked]:shadow-sm has-[:checked]:text-text-light-primary dark:has-[:checked]:text-text-dark-primary text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium leading-normal">
+<span class="truncate">6M</span>
+<input checked="" class="invisible w-0" name="time-period" type="radio" value="6M"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-3 has-[:checked]:bg-card-light dark:has-[:checked]:bg-background-dark has-[:checked]:shadow-sm has-[:checked]:text-text-light-primary dark:has-[:checked]:text-text-dark-primary text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium leading-normal">
+<span class="truncate">1Y</span>
+<input class="invisible w-0" name="time-period" type="radio" value="1Y"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-3 has-[:checked]:bg-card-light dark:has-[:checked]:bg-background-dark has-[:checked]:shadow-sm has-[:checked]:text-text-light-primary dark:has-[:checked]:text-text-dark-primary text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium leading-normal">
+<span class="truncate">All Time</span>
+<input class="invisible w-0" name="time-period" type="radio" value="All Time"/>
+</label>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2 rounded-xl border border-border-light dark:border-border-dark p-6 bg-card-light dark:bg-card-dark shadow-sm">
+<p class="text-text-light-primary dark:text-text-dark-primary text-base font-medium leading-normal">Net Worth Trend</p>
+<p class="text-text-light-primary dark:text-text-dark-primary tracking-light text-3xl font-bold leading-tight truncate">$152,345.00</p>
+<div class="flex gap-1 items-center">
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-normal leading-normal">Last 6 Months</p>
+<p class="text-positive text-sm font-medium leading-normal flex items-center"><span class="material-symbols-outlined text-base">arrow_upward</span>+5.2%</p>
+</div>
+<div class="flex min-h-[180px] flex-1 flex-col gap-8 py-4">
+<svg fill="none" height="148" preserveaspectratio="none" viewbox="-3 0 478 150" width="100%" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V149H326.769H0V109Z" fill="url(#paint0_linear_1131_5935_light)"></path>
+<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25" stroke="#13a4ec" stroke-linecap="round" stroke-width="3"></path>
+<defs>
+<lineargradient gradientunits="userSpaceOnUse" id="paint0_linear_1131_5935_light" x1="236" x2="236" y1="1" y2="149">
+<stop stop-color="#13a4ec" stop-opacity="0.2"></stop>
+<stop offset="1" stop-color="#13a4ec" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+</svg>
+<div class="flex justify-around">
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-[13px] font-bold leading-normal tracking-[0.015em]">Jan</p>
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-[13px] font-bold leading-normal tracking-[0.015em]">Feb</p>
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-[13px] font-bold leading-normal tracking-[0.015em]">Mar</p>
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-[13px] font-bold leading-normal tracking-[0.015em]">Apr</p>
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-[13px] font-bold leading-normal tracking-[0.015em]">May</p>
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-[13px] font-bold leading-normal tracking-[0.015em]">Jun</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2 rounded-xl border border-border-light dark:border-border-dark p-6 bg-card-light dark:bg-card-dark shadow-sm">
+<p class="text-text-light-primary dark:text-text-dark-primary text-base font-medium leading-normal">Income vs. Expense</p>
+<p class="text-text-light-primary dark:text-text-dark-primary tracking-light text-3xl font-bold leading-tight truncate">$8,230 vs $5,120</p>
+<div class="flex gap-1 items-center">
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-normal leading-normal">Last 6 Months</p>
+<p class="text-negative text-sm font-medium leading-normal flex items-center"><span class="material-symbols-outlined text-base">arrow_downward</span>-1.5%</p>
+</div>
+<div class="flex flex-1 items-end gap-4 px-3 pt-10 pb-4 min-h-[180px]">
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full flex items-end gap-2 h-[120px]">
+<div class="bg-positive/30 dark:bg-positive/40 w-1/2 h-[90%] rounded-t"></div>
+<div class="bg-negative/30 dark:bg-negative/40 w-1/2 h-[60%] rounded-t"></div>
+</div>
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-[13px] font-bold">Jan</p>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full flex items-end gap-2 h-[120px]">
+<div class="bg-positive/30 dark:bg-positive/40 w-1/2 h-[80%] rounded-t"></div>
+<div class="bg-negative/30 dark:bg-negative/40 w-1/2 h-[70%] rounded-t"></div>
+</div>
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-[13px] font-bold">Feb</p>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full flex items-end gap-2 h-[120px]">
+<div class="bg-positive/30 dark:bg-positive/40 w-1/2 h-full rounded-t"></div>
+<div class="bg-negative/30 dark:bg-negative/40 w-1/2 h-[80%] rounded-t"></div>
+</div>
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-[13px] font-bold">Mar</p>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full flex items-end gap-2 h-[120px]">
+<div class="bg-positive/30 dark:bg-positive/40 w-1/2 h-[75%] rounded-t"></div>
+<div class="bg-negative/30 dark:bg-negative/40 w-1/2 h-[85%] rounded-t"></div>
+</div>
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-[13px] font-bold">Apr</p>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full flex items-end gap-2 h-[120px]">
+<div class="bg-positive/30 dark:bg-positive/40 w-1/2 h-[95%] rounded-t"></div>
+<div class="bg-negative/30 dark:bg-negative/40 w-1/2 h-[50%] rounded-t"></div>
+</div>
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-[13px] font-bold">May</p>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full flex items-end gap-2 h-[120px]">
+<div class="bg-positive w-1/2 h-[88%] rounded-t"></div>
+<div class="bg-negative w-1/2 h-[65%] rounded-t"></div>
+</div>
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-[13px] font-bold">Jun</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2 rounded-xl border border-border-light dark:border-border-dark p-6 bg-card-light dark:bg-card-dark shadow-sm lg:col-span-2">
+<div class="flex justify-between items-center">
+<p class="text-text-light-primary dark:text-text-dark-primary text-base font-medium leading-normal">Recent Transactions</p>
+<a class="text-sm font-bold text-primary" href="#">View All</a>
+</div>
+<div class="flex overflow-hidden mt-4">
+<table class="w-full">
+<thead>
+<tr class="">
+<th class="px-4 py-3 text-left text-text-light-primary dark:text-text-dark-primary w-[40%] text-sm font-medium leading-normal">Transaction</th>
+<th class="px-4 py-3 text-left text-text-light-primary dark:text-text-dark-primary w-[20%] text-sm font-medium leading-normal">Category</th>
+<th class="px-4 py-3 text-left text-text-light-primary dark:text-text-dark-primary w-[20%] text-sm font-medium leading-normal">Date</th>
+<th class="px-4 py-3 text-right text-text-light-primary dark:text-text-dark-primary w-[20%] text-sm font-medium leading-normal">Amount</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-t border-border-light dark:border-border-dark">
+<td class="h-[72px] px-4 py-2 text-text-light-primary dark:text-text-dark-primary text-sm font-normal leading-normal">Whole Foods Market</td>
+<td class="h-[72px] px-4 py-2 text-sm font-normal leading-normal">
+<span class="truncate inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-full bg-primary/20 text-text-light-primary dark:text-text-dark-primary">Groceries</span>
+</td>
+<td class="h-[72px] px-4 py-2 text-text-light-secondary dark:text-text-dark-secondary text-sm font-normal leading-normal">Jun 15, 2024</td>
+<td class="h-[72px] px-4 py-2 text-text-light-secondary dark:text-text-dark-secondary text-sm font-normal leading-normal text-right">-$85.40</td>
+</tr>
+<tr class="border-t border-border-light dark:border-border-dark">
+<td class="h-[72px] px-4 py-2 text-text-light-primary dark:text-text-dark-primary text-sm font-normal leading-normal">Paycheck Deposit</td>
+<td class="h-[72px] px-4 py-2 text-sm font-normal leading-normal">
+<span class="truncate inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-full bg-positive/20 text-positive">Income</span>
+</td>
+<td class="h-[72px] px-4 py-2 text-text-light-secondary dark:text-text-dark-secondary text-sm font-normal leading-normal">Jun 14, 2024</td>
+<td class="h-[72px] px-4 py-2 text-positive text-sm font-medium leading-normal text-right">+$2,500.00</td>
+</tr>
+<tr class="border-t border-border-light dark:border-border-dark">
+<td class="h-[72px] px-4 py-2 text-text-light-primary dark:text-text-dark-primary text-sm font-normal leading-normal">Netflix Subscription</td>
+<td class="h-[72px] px-4 py-2 text-sm font-normal leading-normal">
+<span class="truncate inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-full bg-primary/20 text-text-light-primary dark:text-text-dark-primary">Bills</span>
+</td>
+<td class="h-[72px] px-4 py-2 text-text-light-secondary dark:text-text-dark-secondary text-sm font-normal leading-normal">Jun 14, 2024</td>
+<td class="h-[72px] px-4 py-2 text-text-light-secondary dark:text-text-dark-secondary text-sm font-normal leading-normal text-right">-$15.99</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+<aside class="w-80 border-l border-border-light dark:border-border-dark p-6 bg-card-light dark:bg-card-dark hidden xl:block">
+<h3 class="text-xl font-bold text-text-light-primary dark:text-text-dark-primary mb-6">Customize Report</h3>
+<div class="space-y-6">
+<div>
+<label class="block text-sm font-medium text-text-light-primary dark:text-text-dark-primary mb-2" for="date-range">Date Range</label>
+<input class="w-full h-10 px-3 bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg text-sm text-text-light-secondary dark:text-text-dark-secondary focus:ring-primary focus:border-primary" id="date-range" name="date-range" placeholder="Select a date range" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-text-light-primary dark:text-text-dark-primary mb-2">Accounts</label>
+<div class="space-y-2">
+<label class="flex items-center space-x-2 cursor-pointer">
+<input checked="" class="h-4 w-4 rounded border-border-light dark:border-border-dark text-primary focus:ring-primary bg-transparent" type="checkbox"/>
+<span class="text-sm text-text-light-secondary dark:text-text-dark-secondary">Checking Account</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer">
+<input checked="" class="h-4 w-4 rounded border-border-light dark:border-border-dark text-primary focus:ring-primary bg-transparent" type="checkbox"/>
+<span class="text-sm text-text-light-secondary dark:text-text-dark-secondary">Savings Account</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer">
+<input class="h-4 w-4 rounded border-border-light dark:border-border-dark text-primary focus:ring-primary bg-transparent" type="checkbox"/>
+<span class="text-sm text-text-light-secondary dark:text-text-dark-secondary">Credit Card</span>
+</label>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-text-light-primary dark:text-text-dark-primary mb-2">Categories</label>
+<select class="w-full bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg text-sm text-text-light-secondary dark:text-text-dark-secondary focus:ring-primary focus:border-primary" multiple="">
+<option>Groceries</option>
+<option>Transport</option>
+<option>Bills</option>
+<option>Shopping</option>
+<option>Dining</option>
+</select>
+</div>
+</div>
+<div class="mt-8 space-y-3">
+<button class="w-full flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-slate-50 text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Apply Filters</span>
+</button>
+<button class="w-full flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary/20 text-text-light-primary dark:text-text-dark-primary text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Reset</span>
+</button>
+</div>
+</aside>
+</div>
+</div>
+</div>
+</body></html>
