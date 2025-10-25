@@ -182,108 +182,113 @@
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 <!-- Recent Transactions -->
 <div class="flex flex-col gap-4 rounded-xl border border-border-light dark:border-border-dark p-6 bg-card-light dark:bg-card-dark shadow-sm">
-<div class="flex justify-between items-center">
-<h3 class="text-lg font-bold">Recent Transactions</h3>
-<a class="text-sm font-semibold text-primary" href="#">View All</a>
-</div>
-<div class="flex flex-col gap-4">
-<div class="flex items-center gap-4">
-<div class="flex items-center justify-center size-10 rounded-full bg-primary/10 text-primary">
-<span class="material-symbols-outlined">shopping_cart</span>
-</div>
-<div class="flex-1">
-<p class="font-semibold">SuperMart</p>
-<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">June 28, 2024</p>
-</div>
-<p class="font-bold text-negative">-$85.50</p>
-</div>
-<div class="flex items-center gap-4">
-<div class="flex items-center justify-center size-10 rounded-full bg-positive/20 text-positive">
-<span class="material-symbols-outlined">payments</span>
-</div>
-<div class="flex-1">
-<p class="font-semibold">Monthly Salary</p>
-<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">June 27, 2024</p>
-</div>
-<p class="font-bold text-positive">+$4,500.00</p>
-</div>
-<div class="flex items-center gap-4">
-<div class="flex items-center justify-center size-10 rounded-full bg-primary/10 text-primary">
-<span class="material-symbols-outlined">receipt_long</span>
-</div>
-<div class="flex-1">
-<p class="font-semibold">Utility Bill</p>
-<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">June 26, 2024</p>
-</div>
-<p class="font-bold text-negative">-$120.00</p>
-</div>
-<div class="flex items-center gap-4">
-<div class="flex items-center justify-center size-10 rounded-full bg-primary/10 text-primary">
-<span class="material-symbols-outlined">directions_bus</span>
-</div>
-<div class="flex-1">
-<p class="font-semibold">Public Transport</p>
-<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">June 25, 2024</p>
-</div>
-<p class="font-bold text-negative">-$22.75</p>
-</div>
-</div>
+  <div class="flex justify-between items-center">
+    <h3 class="text-lg font-bold">Recent Transactions</h3>
+    <a class="text-sm font-semibold text-primary" href="#">View All</a>
+  </div>
+  <div class="flex flex-col gap-4">
+    {% for transaction in transactions %}
+    <div class="flex items-center gap-4">
+      <div class="flex items-center justify-center size-10 rounded-full bg-primary/10 text-primary">
+        <span class="material-symbols-outlined">shopping_cart</span>
+      </div>
+      <div class="flex-1">
+        <p class="font-semibold">{{ transaction.description }}</p>
+        <p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">{{ transaction.date }}</p>
+      </div>
+      <p class="font-bold {% if transaction.amount < 0 %}text-negative{% else %}text-positive{% endif %}">
+        {{ ('-$%.2f' if transaction.amount < 0 else '+$%.2f') | format(transaction.amount|abs) }}
+      </p>
+    </div>
+    {% endfor %}
+  </div>
 </div>
 <!-- Account Summary -->
 <div class="flex flex-col gap-4 rounded-xl border border-border-light dark:border-border-dark p-6 bg-card-light dark:bg-card-dark shadow-sm">
-<div class="flex justify-between items-center">
-<h3 class="text-lg font-bold">Accounts</h3>
-<a class="text-sm font-semibold text-primary" href="#">Manage Accounts</a>
-</div>
-<div class="flex flex-col gap-4">
-<div class="flex items-center gap-4">
-<div class="flex items-center justify-center size-10 rounded-lg bg-primary/10 text-primary">
-<span class="material-symbols-outlined">account_balance</span>
-</div>
-<div class="flex-1">
-<p class="font-semibold">Checking Account</p>
-<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">...4321</p>
-</div>
-<p class="font-bold">$8,123.45</p>
-</div>
-<div class="flex items-center gap-4">
-<div class="flex items-center justify-center size-10 rounded-lg bg-primary/10 text-primary">
-<span class="material-symbols-outlined">savings</span>
-</div>
-<div class="flex-1">
-<p class="font-semibold">Savings Account</p>
-<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">...8765</p>
-</div>
-<p class="font-bold">$7,087.05</p>
-</div>
-<div class="flex items-center gap-4">
-<div class="flex items-center justify-center size-10 rounded-lg bg-primary/10 text-primary">
-<span class="material-symbols-outlined">credit_card</span>
-</div>
-<div class="flex-1">
-<p class="font-semibold">Primary Credit Card</p>
-<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">...1122</p>
-</div>
-<p class="font-bold text-negative">-$800.00</p>
-</div>
-<div class="flex items-center gap-4">
-<div class="flex items-center justify-center size-10 rounded-lg bg-primary/10 text-primary">
-<span class="material-symbols-outlined">monitoring</span>
-</div>
-<div class="flex-1">
-<p class="font-semibold">Investment Portfolio</p>
-<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">...3344</p>
-</div>
-<p class="font-bold">$110,219.50</p>
-</div>
-</div>
+  <div class="flex justify-between items-center">
+    <h3 class="text-lg font-bold">Accounts</h3>
+    <a class="text-sm font-semibold text-primary" href="#">Manage Accounts</a>
+  </div>
+  <div class="flex flex-col gap-4">
+    {% for account in accounts %}
+    <div class="flex items-center gap-4">
+      <div class="flex items-center justify-center size-10 rounded-lg bg-primary/10 text-primary">
+        <span class="material-symbols-outlined">account_balance</span>
+      </div>
+      <div class="flex-1">
+        <p class="font-semibold">{{ account.name }}</p>
+        <p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">{{ account.type }}</p>
+      </div>
+      <p class="font-bold">${{ '%.2f'|format(account.balance) }}</p>
+    </div>
+    {% endfor %}
+  </div>
 </div>
 </div>
 </div>
 </main>
 <!-- Floating Action Button -->
-<button class="fixed bottom-8 right-8 z-40 flex items-center justify-center w-14 h-14 rounded-full bg-primary text-white shadow-lg hover:bg-primary/90 transition-colors">
-<span class="material-symbols-outlined" style="font-size: 28px;">add</span>
+<button id="add-transaction-btn" class="fixed bottom-8 right-8 z-40 flex items-center justify-center w-14 h-14 rounded-full bg-primary text-white shadow-lg hover:bg-primary/90 transition-colors">
+  <span class="material-symbols-outlined" style="font-size: 28px;">add</span>
 </button>
+
+<!-- Modal -->
+<div id="add-transaction-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-card-light dark:bg-card-dark rounded-lg shadow-lg p-6 w-full max-w-md">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-lg font-bold">Add Transaction</h3>
+      <button id="close-modal-btn" class="text-text-secondary-light dark:text-text-secondary-dark">&times;</button>
+    </div>
+    <form action="/add_transaction" method="post">
+      <div class="mb-4">
+        <label for="description" class="block text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Description</label>
+        <input type="text" name="description" id="description" class="form-input mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark" required>
+      </div>
+      <div class="mb-4">
+        <label for="amount" class="block text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Amount</label>
+        <input type="number" step="0.01" name="amount" id="amount" class="form-input mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark" required>
+      </div>
+      <div class="mb-4">
+        <label for="date" class="block text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Date</label>
+        <input type="date" name="date" id="date" class="form-input mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark" required>
+      </div>
+      <div class="mb-4">
+        <label for="account_id" class="block text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Account</label>
+        <select name="account_id" id="account_id" class="form-select mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark" required>
+          {% for account in accounts %}
+          <option value="{{ account.id }}">{{ account.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="mb-4">
+        <label for="category_id" class="block text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Category</label>
+        <select name="category_id" id="category_id" class="form-select mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark" required>
+          {% for category in categories %}
+          <option value="{{ category.id }}">{{ category.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="flex justify-end">
+        <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90">Add Transaction</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  const addTransactionBtn = document.getElementById('add-transaction-btn');
+  const addTransactionModal = document.getElementById('add-transaction-modal');
+  const closeModalBtn = document.getElementById('close-modal-btn');
+
+  addTransactionBtn.addEventListener('click', () => {
+    addTransactionModal.classList.remove('hidden');
+    addTransactionModal.classList.add('flex');
+  });
+
+  closeModalBtn.addEventListener('click', () => {
+    addTransactionModal.classList.add('hidden');
+    addTransactionModal.classList.remove('flex');
+  });
+</script>
 </div>
 </body></html>
