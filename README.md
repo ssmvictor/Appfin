@@ -1,44 +1,45 @@
-# FinDash - Personal Finance Dashboard
+# FinDash - Painel de Finanças Pessoais
 
-FinDash is a modern and intuitive web application for managing your personal finances. It provides a clear overview of your financial situation, allowing you to track your accounts, transactions, and budgets with ease.
+O FinDash é uma aplicação web moderna e intuitiva para gerenciar suas finanças pessoais. Ele fornece uma visão clara da sua situação financeira, permitindo que você acompanhe suas contas, transações, orçamentos e relatórios com facilidade.
 
-## Features
+## Funcionalidades
 
-- **Dashboard:** A comprehensive dashboard that displays your net worth, cash, debt, and a summary of your recent transactions and account balances.
-- **Transaction Management:** Add new transactions with descriptions, amounts, dates, accounts, and categories.
-- **Account and Category Tracking:** Organize your finances with customizable accounts and categories.
-- **Modern UI:** A clean and modern user interface based on the "stitch_dashboard_principal" layout.
+- **Painel de Controle:** Um painel completo que exibe seu patrimônio líquido, dinheiro, dívidas, além de gráficos interativos de "Receitas vs. Despesas" e "Detalhamento de Despesas".
+- **Gerenciamento de Transações:** Adicione, edite e exclua transações com descrições, valores, datas, contas e categorias.
+- **Página de Relatórios:** Obtenha insights sobre seus gastos com um resumo mensal de receitas e despesas e um detalhamento de despesas por categoria.
+- **Página de Configurações:** Gerencie suas contas e categorias de forma simples, com opções para adicionar, editar e excluir.
+- **UI Moderna:** Uma interface de usuário limpa e moderna, traduzida para o português do Brasil.
 
-## Project Structure
+## Estrutura do Projeto
 
-- **`app.py`:** The main Flask application file. It handles routing, database connections, and serves the frontend.
-- **`database.py`:** Contains the data models (`Account`, `Category`, `Transaction`) and the `Database` class, which manages all interactions with the SQLite database.
-- **`templates/index.html`:** The Jinja2 template for the main dashboard page.
-- **`requirements.txt`:** A list of the Python dependencies required to run the project.
-- **`.gitignore`:** A file that specifies which files and directories should be ignored by Git.
+- **`app.py`:** O arquivo principal da aplicação Flask. Ele gerencia as rotas, conexões com o banco de dados e serve o frontend.
+- **`database.py`:** Contém os modelos de dados (`Account`, `Category`, `Transaction`) e a classe `Database`, que gerencia todas as interações com o banco de dados SQLite.
+- **`templates/`:** A pasta que contém os templates Jinja2 para todas as páginas da aplicação (`index.html`, `transactions.html`, etc.).
+- **`requirements.txt`:** Uma lista das dependências Python necessárias para executar o projeto.
+- **`.gitignore`:** Um arquivo que especifica quais arquivos e diretórios devem ser ignorados pelo Git.
 
-## Setup Instructions
+## Como Executar
 
-1.  **Clone the repository:**
+1.  **Clone o repositório:**
     ```bash
-    git clone <repository-url>
-    cd <repository-directory>
+    git clone <url-do-repositorio>
+    cd <diretorio-do-repositorio>
     ```
 
-2.  **Create and activate a virtual environment:**
+2.  **Crie e ative um ambiente virtual:**
     ```bash
     python -m venv venv
-    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+    source venv/bin/activate  # No Windows, use `venv\Scripts\activate`
     ```
 
-3.  **Install the dependencies:**
+3.  **Instale as dependências:**
     ```bash
     pip install -r requirements.txt
     ```
 
-4.  **Run the application:**
+4.  **Execute a aplicação:**
     ```bash
-    python app.py
+    flask run
     ```
 
-    The application will be available at `http://127.0.0.1:5000`.
+    A aplicação estará disponível em `http://127.0.0.1:5000`.

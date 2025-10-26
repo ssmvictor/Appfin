@@ -78,7 +78,31 @@ def transactions():
 @app.route('/budgets')
 def budgets():
     budgets = db.get_budgets()
-    return render_template('budgets.html', budgets=budgets)
+    categories = db.get_categories()
+    return render_template('budgets.html', budgets=budgets, categories=categories)
+
+@app.route('/add_budget', methods=['POST'])
+def add_budget():
+    category_id = int(request.form['category_id'])
+    amount = float(request.form['amount'])
+    start_date = request.form['start_date']
+    end_date = request.form['end_date']
+    db.add_budget(category_id, amount, start_date, end_date)
+    return redirect(url_for('budgets'))
+
+@app.route('/update_budget/<int:budget_id>', methods=['POST'])
+def update_budget(budget_id):
+    category_id = int(request.form['category_id'])
+    amount = float(request.form['amount'])
+    start_date = request.form['start_date']
+    end_date = request.form['end_date']
+    db.update_budget(budget_id, category_id, amount, start_date, end_date)
+    return redirect(url_for('budgets'))
+
+@app.route('/delete_budget/<int:budget_id>')
+def delete_budget(budget_id):
+    db.delete_budget(budget_id)
+    return redirect(url_for('budgets'))
 
 @app.route('/reports')
 def reports():

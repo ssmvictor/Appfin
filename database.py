@@ -294,6 +294,29 @@ class Database:
         cursor.execute("DELETE FROM categories WHERE id = ?", (category_id,))
         self.conn.commit()
 
+    def add_budget(self, category_id: int, amount: float, start_date: str, end_date: str) -> None:
+        if not self.conn:
+            return
+        cursor = self.conn.cursor()
+        cursor.execute("INSERT INTO budgets (category_id, amount, start_date, end_date) VALUES (?, ?, ?, ?)",
+                       (category_id, amount, start_date, end_date))
+        self.conn.commit()
+
+    def update_budget(self, budget_id: int, category_id: int, amount: float, start_date: str, end_date: str) -> None:
+        if not self.conn:
+            return
+        cursor = self.conn.cursor()
+        cursor.execute("UPDATE budgets SET category_id = ?, amount = ?, start_date = ?, end_date = ? WHERE id = ?",
+                       (category_id, amount, start_date, end_date, budget_id))
+        self.conn.commit()
+
+    def delete_budget(self, budget_id: int) -> None:
+        if not self.conn:
+            return
+        cursor = self.conn.cursor()
+        cursor.execute("DELETE FROM budgets WHERE id = ?", (budget_id,))
+        self.conn.commit()
+
     def get_monthly_summary(self):
         if not self.conn:
             return []
