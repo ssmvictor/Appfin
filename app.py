@@ -41,6 +41,39 @@ def add_transaction():
     db.add_transaction(description, amount, date, account_id, category_id)
     return redirect(url_for('index'))
 
+@app.route('/update_transaction/<int:transaction_id>', methods=['POST'])
+def update_transaction(transaction_id):
+    description = request.form['description']
+    amount = float(request.form['amount'])
+    date = request.form['date']
+    account_id = int(request.form['account_id'])
+    category_id = int(request.form['category_id'])
+    db.update_transaction(transaction_id, description, amount, date, account_id, category_id)
+    return redirect(url_for('transactions'))
+
+@app.route('/delete_transaction/<int:transaction_id>')
+def delete_transaction(transaction_id):
+    db.delete_transaction(transaction_id)
+    return redirect(url_for('transactions'))
+
+@app.route('/transactions')
+def transactions():
+    transactions = db.get_transactions()
+    return render_template('transactions.html', transactions=transactions)
+
+@app.route('/budgets')
+def budgets():
+    budgets = db.get_budgets()
+    return render_template('budgets.html', budgets=budgets)
+
+@app.route('/reports')
+def reports():
+    return render_template('reports.html')
+
+@app.route('/settings')
+def settings():
+    return render_template('settings.html')
+
 if __name__ == '__main__':
     with app.app_context():
         db.connect()

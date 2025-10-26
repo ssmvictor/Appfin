@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Todas as Transações - FinDash</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-text-primary-light dark:text-text-primary-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col">
+    <!-- Barra de Navegação Superior -->
+    <header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-border-light dark:border-border-dark bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm px-6 sm:px-10 py-3">
+        <div class="flex items-center gap-8">
+            <div class="flex items-center gap-3 text-text-primary-light dark:text-text-primary-dark">
+                <div class="text-primary size-7">
+                    <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+                    </svg>
+                </div>
+                <h2 class="text-xl font-bold leading-tight tracking-[-0.015em]">FinDash</h2>
+            </div>
+            <nav class="hidden md:flex items-center gap-6">
+                <a class="text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark text-sm font-medium leading-normal" href="/">Dashboard</a>
+                <a class="text-primary text-sm font-bold leading-normal" href="/transactions">Transações</a>
+                <a class="text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark text-sm font-medium leading-normal" href="/budgets">Orçamentos</a>
+                <a class="text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark text-sm font-medium leading-normal" href="/reports">Relatórios</a>
+            </nav>
+        </div>
+        <div class="flex flex-1 justify-end gap-4 items-center">
+            <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90 transition-opacity">
+                <span class="truncate">Adicionar Nova Transação</span>
+            </button>
+        </div>
+    </header>
+    <!-- Conteúdo Principal -->
+    <main class="flex-grow w-full max-w-screen-2xl mx-auto p-4 sm:p-6 lg:p-8">
+        <div class="grid grid-cols-1">
+            <section>
+                <div class="flex flex-col gap-6">
+                    <h1 class="text-2xl font-bold">Todas as Transações</h1>
+                    <div class="bg-white dark:bg-card-dark rounded-xl border border-border-light dark:border-border-dark overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm text-left">
+                                <thead class="text-xs text-text-secondary-light dark:text-text-secondary-dark uppercase bg-background-light dark:bg-background-dark">
+                                <tr>
+                                    <th class="px-6 py-3" scope="col">Data</th>
+                                    <th class="px-6 py-3" scope="col">Descrição</th>
+                                    <th class="px-6 py-3" scope="col">Categoria</th>
+                                    <th class="px-6 py-3 text-right" scope="col">Valor</th>
+                                    <th class="px-6 py-3 text-right" scope="col">Ações</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for transaction in transactions %}
+                                <tr class="border-b dark:border-border-dark hover:bg-gray-50 dark:hover:bg-gray-800">
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ transaction.date }}</td>
+                                    <td class="px-6 py-4 font-medium text-text-primary-light dark:text-text-primary-dark">{{ transaction.description }}</td>
+                                    <td class="px-6 py-4">{{ transaction.category_name }}</td>
+                                    <td class="px-6 py-4 text-right font-semibold {% if transaction.amount < 0 %}text-negative{% else %}text-positive{% endif %}">
+                                        {{ ('-R$%.2f' if transaction.amount < 0 else '+R$%.2f') | format(transaction.amount|abs) }}
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                        <a href="#" onclick="openEditModal({{ transaction.id }}, '{{ transaction.description }}', {{ transaction.amount }}, '{{ transaction.date }}', {{ transaction.account_id }}, {{ transaction.category_id }})" class="text-primary hover:underline">Editar</a>
+                                        <a href="/delete_transaction/{{ transaction.id }}" class="text-negative hover:underline ml-4">Excluir</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+</div>
+
+<!-- Edit Transaction Modal -->
+<div id="edit-transaction-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-card-light dark:bg-card-dark rounded-lg shadow-lg p-6 w-full max-w-md">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-bold">Editar Transação</h3>
+            <button onclick="closeEditModal()" class="text-text-secondary-light dark:text-text-secondary-dark">&times;</button>
+        </div>
+        <form id="edit-transaction-form" method="post">
+            <input type="hidden" name="transaction_id" id="edit-transaction-id">
+            <div class="mb-4">
+                <label for="edit-description" class="block text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Descrição</label>
+                <input type="text" name="description" id="edit-description" class="form-input mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark" required>
+            </div>
+            <div class="mb-4">
+                <label for="edit-amount" class="block text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Valor</label>
+                <input type="number" step="0.01" name="amount" id="edit-amount" class="form-input mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark" required>
+            </div>
+            <div class="mb-4">
+                <label for="edit-date" class="block text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Data</label>
+                <input type="date" name="date" id="edit-date" class="form-input mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark" required>
+            </div>
+            <div class="mb-4">
+                <label for="edit-account-id" class="block text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Conta</label>
+                <select name="account_id" id="edit-account-id" class="form-select mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark" required>
+                    {% for account in accounts %}
+                    <option value="{{ account.id }}">{{ account.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="edit-category-id" class="block text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Categoria</label>
+                <select name="category_id" id="edit-category-id" class="form-select mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark" required>
+                    {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="flex justify-end">
+                <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90">Salvar Alterações</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openEditModal(id, description, amount, date, account_id, category_id) {
+        document.getElementById('edit-transaction-id').value = id;
+        document.getElementById('edit-description').value = description;
+        document.getElementById('edit-amount').value = amount;
+        document.getElementById('edit-date').value = date;
+        document.getElementById('edit-account-id').value = account_id;
+        document.getElementById('edit-category-id').value = category_id;
+        document.getElementById('edit-transaction-form').action = '/update_transaction/' + id;
+        document.getElementById('edit-transaction-modal').classList.remove('hidden');
+        document.getElementById('edit-transaction-modal').classList.add('flex');
+    }
+
+    function closeEditModal() {
+        document.getElementById('edit-transaction-modal').classList.add('hidden');
+        document.getElementById('edit-transaction-modal').classList.remove('flex');
+    }
+</script>
+</body>
+</html>
