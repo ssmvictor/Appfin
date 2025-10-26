@@ -5,6 +5,15 @@ from typing import Dict, Any
 app = Flask(__name__)
 db = Database('finance.db')
 
+# Initialize database on startup
+with app.app_context():
+    db.connect()
+    db.create_tables()
+    # Only insert dummy data if the database is empty
+    if not db.get_transactions():
+        db.insert_dummy_data()
+    db.close()
+
 @app.before_request
 def before_request() -> None:
     db.connect()
@@ -18,7 +27,10 @@ def index() -> str:
     accounts = db.get_accounts()
     categories = db.get_categories()
     transactions = db.get_transactions()
-    return render_template('index.html', accounts=accounts, categories=categories, transactions=transactions)
+    total_net_worth = db.get_total_net_worth()
+    total_cash = db.get_total_cash()
+    total_debt = db.get_total_debt()
+    return render_template('index.html', accounts=accounts, categories=categories, transactions=transactions, total_net_worth=total_net_worth, total_cash=total_cash, total_debt=total_debt)
 
 @app.route('/api/data')
 def get_data() -> Dict[str, Any]:
@@ -59,7 +71,9 @@ def delete_transaction(transaction_id):
 @app.route('/transactions')
 def transactions():
     transactions = db.get_transactions()
-    return render_template('transactions.html', transactions=transactions)
+    accounts = db.get_accounts()
+    categories = db.get_categories()
+    return render_template('transactions.html', transactions=transactions, accounts=accounts, categories=categories)
 
 @app.route('/budgets')
 def budgets():
@@ -68,16 +82,53 @@ def budgets():
 
 @app.route('/reports')
 def reports():
-    return render_template('reports.html')
+    monthly_summary = db.get_monthly_summary()
+    category_summary = db.get_category_summary()
+    return render_template('reports.html', monthly_summary=monthly_summary, category_summary=category_summary)
 
 @app.route('/settings')
 def settings():
-    return render_template('settings.html')
+    accounts = db.get_accounts()
+    categories = db.get_categories()
+    return render_template('settings.html', accounts=accounts, categories=categories)
+
+@app.route('/add_account', methods=['POST'])
+def add_account():
+    name = request.form['name']
+    type = request.form['type']
+    balance = float(request.form['balance'])
+    db.add_account(name, type, balance)
+    return redirect(url_for('settings'))
+
+@app.route('/update_account/<int:account_id>', methods=['POST'])
+def update_account(account_id):
+    name = request.form['name']
+    type = request.form['type']
+    balance = float(request.form['balance'])
+    db.update_account(account_id, name, type, balance)
+    return redirect(url_for('settings'))
+
+@app.route('/delete_account/<int:account_id>')
+def delete_account(account_id):
+    db.delete_account(account_id)
+    return redirect(url_for('settings'))
+
+@app.route('/add_category', methods=['POST'])
+def add_category():
+    name = request.form['name']
+    db.add_category(name)
+    return redirect(url_for('settings'))
+
+@app.route('/update_category/<int:category_id>', methods=['POST'])
+def update_category(category_id):
+    name = request.form['name']
+    db.update_category(category_id, name)
+    return redirect(url_for('settings'))
+
+@app.route('/delete_category/<int:category_id>')
+def delete_category(category_id):
+    db.delete_category(category_id)
+    return redirect(url_for('settings'))
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.connect()
-        db.create_tables()
-        db.insert_dummy_data()
-        db.close()
     app.run(debug=True)

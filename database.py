@@ -224,3 +224,105 @@ class Database:
         # Delete the transaction
         cursor.execute("DELETE FROM transactions WHERE id = ?", (transaction_id,))
         self.conn.commit()
+
+    def get_total_net_worth(self) -> float:
+        if not self.conn:
+            return 0.0
+
+        cursor = self.conn.cursor()
+        cursor.execute("SELECT SUM(balance) as total FROM accounts")
+        row = cursor.fetchone()
+        return row['total'] if row and row['total'] else 0.0
+
+    def get_total_cash(self) -> float:
+        if not self.conn:
+            return 0.0
+
+        cursor = self.conn.cursor()
+        cursor.execute("SELECT SUM(balance) as total FROM accounts WHERE type IN ('Checking', 'Savings')")
+        row = cursor.fetchone()
+        return row['total'] if row and row['total'] else 0.0
+
+    def get_total_debt(self) -> float:
+        if not self.conn:
+            return 0.0
+
+        cursor = self.conn.cursor()
+        cursor.execute("SELECT SUM(balance) as total FROM accounts WHERE type = 'Credit Card'")
+        row = cursor.fetchone()
+        return abs(row['total']) if row and row['total'] else 0.0
+
+    def add_account(self, name: str, type: str, balance: float) -> None:
+        if not self.conn:
+            return
+        cursor = self.conn.cursor()
+        cursor.execute("INSERT INTO accounts (name, type, balance) VALUES (?, ?, ?)", (name, type, balance))
+        self.conn.commit()
+
+    def update_account(self, account_id: int, name: str, type: str, balance: float) -> None:
+        if not self.conn:
+            return
+        cursor = self.conn.cursor()
+        cursor.execute("UPDATE accounts SET name = ?, type = ?, balance = ? WHERE id = ?", (name, type, balance, account_id))
+        self.conn.commit()
+
+    def delete_account(self, account_id: int) -> None:
+        if not self.conn:
+            return
+        cursor = self.conn.cursor()
+        cursor.execute("DELETE FROM accounts WHERE id = ?", (account_id,))
+        self.conn.commit()
+
+    def add_category(self, name: str) -> None:
+        if not self.conn:
+            return
+        cursor = self.conn.cursor()
+        cursor.execute("INSERT INTO categories (name) VALUES (?)", (name,))
+        self.conn.commit()
+
+    def update_category(self, category_id: int, name: str) -> None:
+        if not self.conn:
+            return
+        cursor = self.conn.cursor()
+        cursor.execute("UPDATE categories SET name = ? WHERE id = ?", (name, category_id))
+        self.conn.commit()
+
+    def delete_category(self, category_id: int) -> None:
+        if not self.conn:
+            return
+        cursor = self.conn.cursor()
+        cursor.execute("DELETE FROM categories WHERE id = ?", (category_id,))
+        self.conn.commit()
+
+    def get_monthly_summary(self):
+        if not self.conn:
+            return []
+
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            SELECT
+                strftime('%Y-%m', date) as month,
+                SUM(CASE WHEN amount > 0 THEN amount ELSE 0 END) as income,
+                SUM(CASE WHEN amount < 0 THEN -amount ELSE 0 END) as expenses
+            FROM transactions
+            GROUP BY month
+            ORDER BY month DESC
+        """)
+        return cursor.fetchall()
+
+    def get_category_summary(self):
+        if not self.conn:
+            return []
+
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            SELECT
+                c.name as category_name,
+                SUM(-t.amount) as total_expenses
+            FROM transactions t
+            JOIN categories c ON t.category_id = c.id
+            WHERE t.amount < 0
+            GROUP BY c.name
+            ORDER BY total_expenses DESC
+        """)
+        return cursor.fetchall()

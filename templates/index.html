@@ -9,6 +9,7 @@
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="font-display bg-background-light dark:bg-background-dark text-text-primary-light dark:text-text-primary-dark">
 <div class="relative flex h-auto min-h-screen w-full flex-col">
@@ -43,15 +44,15 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
                 <div class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark shadow-sm">
                     <p class="text-base font-medium text-text-secondary-light dark:text-text-secondary-dark">Patrimônio Líquido Total</p>
-                    <p class="tracking-light text-3xl font-bold leading-tight">R$ 125.430,00</p>
+                    <p class="tracking-light text-3xl font-bold leading-tight">R$ {{ '%.2f'|format(total_net_worth) }}</p>
                 </div>
                 <div class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark shadow-sm">
                     <p class="text-base font-medium text-text-secondary-light dark:text-text-secondary-dark">Dinheiro Total</p>
-                    <p class="tracking-light text-3xl font-bold leading-tight">R$ 15.210,50</p>
+                    <p class="tracking-light text-3xl font-bold leading-tight">R$ {{ '%.2f'|format(total_cash) }}</p>
                 </div>
                 <div class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark shadow-sm">
                     <p class="text-base font-medium text-text-secondary-light dark:text-text-secondary-dark">Dívida Total</p>
-                    <p class="tracking-light text-3xl font-bold leading-tight">R$ 5.800,00</p>
+                    <p class="tracking-light text-3xl font-bold leading-tight">R$ {{ '%.2f'|format(total_debt) }}</p>
                 </div>
             </div>
             <!-- Seção de Gráficos -->
@@ -59,10 +60,12 @@
                 <!-- Gráfico de Barras -->
                 <div class="lg:col-span-3 flex flex-col gap-4 rounded-xl border border-border-light dark:border-border-dark p-6 bg-card-light dark:bg-card-dark shadow-sm">
                     <p class="text-lg font-bold">Receitas vs. Despesas</p>
+                    <canvas id="incomeVsExpenseChart"></canvas>
                 </div>
                 <!-- Gráfico de Rosca -->
                 <div class="lg:col-span-2 flex flex-col gap-4 rounded-xl border border-border-light dark:border-border-dark p-6 bg-card-light dark:bg-card-dark shadow-sm">
                     <p class="text-lg font-bold">Detalhamento de Despesas</p>
+                    <canvas id="expenseBreakdownChart"></canvas>
                 </div>
             </div>
             <!-- Tabelas/Listas de Dados -->
@@ -168,6 +171,78 @@
       closeModalBtn.addEventListener('click', () => {
         addTransactionModal.classList.add('hidden');
         addTransactionModal.classList.remove('flex');
+      });
+
+      // Charts
+      const transactions = {{ transactions|tojson }};
+
+      // Income vs. Expense Chart
+      const incomeVsExpenseCtx = document.getElementById('incomeVsExpenseChart').getContext('2d');
+      const incomeByMonth = {};
+      const expenseByMonth = {};
+
+      transactions.forEach(t => {
+        const month = new Date(t.date).toLocaleString('default', { month: 'short' });
+        if (t.amount > 0) {
+          incomeByMonth[month] = (incomeByMonth[month] || 0) + t.amount;
+        } else {
+          expenseByMonth[month] = (expenseByMonth[month] || 0) + Math.abs(t.amount);
+        }
+      });
+
+      const months = [...new Set([...Object.keys(incomeByMonth), ...Object.keys(expenseByMonth)])];
+
+      new Chart(incomeVsExpenseCtx, {
+        type: 'bar',
+        data: {
+          labels: months,
+          datasets: [
+            {
+              label: 'Income',
+              data: months.map(m => incomeByMonth[m] || 0),
+              backgroundColor: '#50E3C2',
+            },
+            {
+              label: 'Expense',
+              data: months.map(m => expenseByMonth[m] || 0),
+              backgroundColor: '#E54B4B',
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            x: {
+              stacked: true,
+            },
+            y: {
+              stacked: true
+            }
+          }
+        }
+      });
+
+      // Expense Breakdown Chart
+      const expenseBreakdownCtx = document.getElementById('expenseBreakdownChart').getContext('2d');
+      const expenseByCategory = {};
+      transactions.forEach(t => {
+        if (t.amount < 0) {
+          expenseByCategory[t.category_name] = (expenseByCategory[t.category_name] || 0) + Math.abs(t.amount);
+        }
+      });
+
+      new Chart(expenseBreakdownCtx, {
+        type: 'doughnut',
+        data: {
+          labels: Object.keys(expenseByCategory),
+          datasets: [{
+            data: Object.values(expenseByCategory),
+            backgroundColor: ['#13a4ec', '#50E3C2', '#E54B4B', '#FFD700', '#9B59B6'],
+          }]
+        },
+        options: {
+          responsive: true,
+        }
       });
     </script>
 </div>

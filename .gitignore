@@ -1,12 +1,13 @@
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-env/
+# Arquivos de ambiente virtual
 venv/
+*.pyc
+__pycache__/
+
+# Banco de dados
 *.db
-*.sqlite3
-flask_output.log
-verify.py
-verification.png
+
+# Arquivos de teste
+test_*.py
+
+# Diretório de verificação
+jules-scratch/
