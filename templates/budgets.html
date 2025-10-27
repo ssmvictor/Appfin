@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Orçamentos - FinDash</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-text-primary-light dark:text-text-primary-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col">
+    <!-- Barra de Navegação Superior -->
+    <header class="sticky top-0 z-50 flex items-center justify-center whitespace-nowrap border-b border-border-light dark:border-border-dark bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm">
+        <div class="w-full max-w-7xl flex items-center justify-between px-6 py-3">
+            <div class="flex items-center gap-8">
+                <div class="flex items-center gap-3 text-text-primary-light dark:text-text-primary-dark">
+                    <div class="text-primary size-7">
+                        <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-bold leading-tight tracking-[-0.015em]">FinDash</h2>
+                </div>
+                <nav class="hidden md:flex items-center gap-6">
+                    <a class="text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark text-sm font-medium leading-normal" href="/">Painel</a>
+                    <a class="text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark text-sm font-medium leading-normal" href="/transactions">Transações</a>
+                    <a class="text-primary text-sm font-bold leading-normal" href="/budgets">Orçamentos</a>
+                    <a class="text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark text-sm font-medium leading-normal" href="/reports">Relatórios</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <!-- Conteúdo Principal -->
+    <main class="flex-grow w-full max-w-screen-2xl mx-auto p-4 sm:p-6 lg:p-8">
+        <div class="flex flex-col gap-6">
+            <h1 class="text-2xl font-bold">Orçamentos</h1>
+            <!-- Formulário para Adicionar/Editar Orçamento -->
+            <div class="bg-card-light dark:bg-card-dark rounded-xl border border-border-light dark:border-border-dark p-6">
+                <h2 id="form-title" class="text-lg font-bold mb-4">Adicionar Orçamento</h2>
+                <form id="budget-form" action="/add_budget" method="post">
+                    <input type="hidden" name="budget_id" id="budget_id">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <select name="category_id" id="category_id" class="form-select rounded-lg" required>
+                            <option value="">Selecione a Categoria</option>
+                            {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="number" step="0.01" name="amount" id="amount" placeholder="Valor do Orçamento" class="form-input rounded-lg" required>
+                        <input type="date" name="start_date" id="start_date" class="form-input rounded-lg" required>
+                        <input type="date" name="end_date" id="end_date" class="form-input rounded-lg" required>
+                    </div>
+                    <button type="submit" class="mt-4 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90">Salvar Orçamento</button>
+                    <button type="button" onclick="resetForm()" class="mt-4 px-4 py-2 bg-gray-300 text-black rounded-lg hover:bg-gray-400">Cancelar Edição</button>
+                </form>
+            </div>
+            <!-- Tabela de Orçamentos -->
+            <div class="bg-card-light dark:bg-card-dark rounded-xl border border-border-light dark:border-border-dark overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left">
+                        <thead class="text-xs text-text-secondary-light dark:text-text-secondary-dark uppercase bg-background-light dark:bg-background-dark">
+                        <tr>
+                            <th class="px-6 py-3">Categoria</th>
+                            <th class="px-6 py-3 text-right">Valor</th>
+                            <th class="px-6 py-3">Data de Início</th>
+                            <th class="px-6 py-3">Data de Fim</th>
+                            <th class="px-6 py-3 text-right">Ações</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for budget in budgets %}
+                        <tr class="border-b dark:border-border-dark">
+                            <td class="px-6 py-4 font-medium">{{ budget.category_name }}</td>
+                            <td class="px-6 py-4 text-right font-semibold">R$ {{ '%.2f'|format(budget.amount) }}</td>
+                            <td class="px-6 py-4">{{ budget.start_date }}</td>
+                            <td class="px-6 py-4">{{ budget.end_date }}</td>
+                            <td class="px-6 py-4 text-right">
+                                <a href="#" onclick="editBudget({{ budget.id }}, {{ budget.category_id }}, {{ budget.amount }}, '{{ budget.start_date }}', '{{ budget.end_date }}')" class="text-primary hover:underline">Editar</a>
+                                <a href="/delete_budget/{{ budget.id }}" class="text-negative hover:underline ml-4">Excluir</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<script>
+    function editBudget(id, category_id, amount, start_date, end_date) {
+        document.getElementById('form-title').innerText = 'Editar Orçamento';
+        document.getElementById('budget-form').action = '/update_budget/' + id;
+        document.getElementById('budget_id').value = id;
+        document.getElementById('category_id').value = category_id;
+        document.getElementById('amount').value = amount;
+        document.getElementById('start_date').value = start_date;
+        document.getElementById('end_date').value = end_date;
+    }
+
+    function resetForm() {
+        document.getElementById('form-title').innerText = 'Adicionar Orçamento';
+        document.getElementById('budget-form').action = '/add_budget';
+        document.getElementById('budget-form').reset();
+        document.getElementById('budget_id').value = '';
+    }
+</script>
+</body>
+</html>

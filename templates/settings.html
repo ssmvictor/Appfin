@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Configurações - FinDash</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-text-primary-light dark:text-text-primary-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col">
+    <!-- Barra de Navegação Superior -->
+    <header class="sticky top-0 z-50 flex items-center justify-center whitespace-nowrap border-b border-border-light dark:border-border-dark bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm">
+        <div class="w-full max-w-7xl flex items-center justify-between px-6 py-3">
+            <div class="flex items-center gap-8">
+                <div class="flex items-center gap-3 text-text-primary-light dark:text-text-primary-dark">
+                    <div class="text-primary size-7">
+                        <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-bold leading-tight tracking-[-0.015em]">FinDash</h2>
+                </div>
+                <nav class="hidden md:flex items-center gap-6">
+                    <a class="text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark text-sm font-medium leading-normal" href="/">Painel</a>
+                    <a class="text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark text-sm font-medium leading-normal" href="/transactions">Transações</a>
+                    <a class="text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark text-sm font-medium leading-normal" href="/budgets">Orçamentos</a>
+                    <a class="text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark text-sm font-medium leading-normal" href="/reports">Relatórios</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <!-- Conteúdo Principal -->
+    <main class="flex-grow w-full max-w-screen-2xl mx-auto p-4 sm:p-6 lg:p-8">
+        <div class="flex flex-col gap-6">
+            <h1 class="text-2xl font-bold">Configurações</h1>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Gerenciar Contas -->
+                <div class="bg-card-light dark:bg-card-dark rounded-xl border border-border-light dark:border-border-dark p-6">
+                    <h2 class="text-lg font-bold mb-4">Gerenciar Contas</h2>
+                    <!-- Formulário para Adicionar/Editar Conta -->
+                    <form id="account-form" action="/add_account" method="post" class="mb-6">
+                        <input type="hidden" name="account_id" id="account_id">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <input type="text" name="name" id="account-name" placeholder="Nome da Conta" class="form-input rounded-lg" required>
+                            <input type="text" name="type" id="account-type" placeholder="Tipo de Conta" class="form-input rounded-lg" required>
+                            <input type="number" step="0.01" name="balance" id="account-balance" placeholder="Saldo Inicial" class="form-input rounded-lg" required>
+                        </div>
+                        <button type="submit" class="mt-4 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90">Salvar Conta</button>
+                    </form>
+                    <!-- Tabela de Contas -->
+                    <table class="w-full text-sm text-left">
+                        <thead>
+                        <tr>
+                            <th class="py-2">Nome</th>
+                            <th class="py-2">Tipo</th>
+                            <th class="py-2 text-right">Saldo</th>
+                            <th class="py-2 text-right">Ações</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for account in accounts %}
+                        <tr>
+                            <td>{{ account.name }}</td>
+                            <td>{{ account.type }}</td>
+                            <td class="text-right">R$ {{ '%.2f'|format(account.balance) }}</td>
+                            <td class="text-right">
+                                <a href="#" onclick="editAccount({{ account.id }}, '{{ account.name }}', '{{ account.type }}', {{ account.balance }})" class="text-primary hover:underline">Editar</a>
+                                <a href="/delete_account/{{ account.id }}" class="text-negative hover:underline ml-4">Excluir</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Gerenciar Categorias -->
+                <div class="bg-card-light dark:bg-card-dark rounded-xl border border-border-light dark:border-border-dark p-6">
+                    <h2 class="text-lg font-bold mb-4">Gerenciar Categorias</h2>
+                    <!-- Formulário para Adicionar/Editar Categoria -->
+                    <form id="category-form" action="/add_category" method="post" class="mb-6">
+                        <input type="hidden" name="category_id" id="category_id">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input type="text" name="name" id="category-name" placeholder="Nome da Categoria" class="form-input rounded-lg" required>
+                            <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90">Salvar Categoria</button>
+                        </div>
+                    </form>
+                    <!-- Tabela de Categorias -->
+                    <table class="w-full text-sm text-left">
+                        <thead>
+                        <tr>
+                            <th class="py-2">Nome</th>
+                            <th class="py-2 text-right">Ações</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for category in categories %}
+                        <tr>
+                            <td>{{ category.name }}</td>
+                            <td class="text-right">
+                                <a href="#" onclick="editCategory({{ category.id }}, '{{ category.name }}')" class="text-primary hover:underline">Editar</a>
+                                <a href="/delete_category/{{ category.id }}" class="text-negative hover:underline ml-4">Excluir</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<script>
+    function editAccount(id, name, type, balance) {
+        document.getElementById('account-form').action = '/update_account/' + id;
+        document.getElementById('account_id').value = id;
+        document.getElementById('account-name').value = name;
+        document.getElementById('account-type').value = type;
+        document.getElementById('account-balance').value = balance;
+    }
+
+    function editCategory(id, name) {
+        document.getElementById('category-form').action = '/update_category/' + id;
+        document.getElementById('category_id').value = id;
+        document.getElementById('category-name').value = name;
+    }
+</script>
+</body>
+</html>
